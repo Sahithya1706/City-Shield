@@ -4,6 +4,9 @@ const WasteList = ({ items, onResolve }) => {
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("all");
 
+  // Define the base URL for images
+  const API_BASE_URL = "http://localhost:5000";
+
   const filtered = items.filter((w) => {
     const matchText =
       w.location.toLowerCase().includes(search.toLowerCase()) ||
@@ -37,7 +40,19 @@ const WasteList = ({ items, onResolve }) => {
 
       {filtered.map((item) => (
         <div className="waste-card" key={item._id}>
-          <div>
+          {/* --- IMAGE SECTION START --- */}
+          {item.image && (
+            <div className="waste-image-container">
+              <img 
+                src={`${API_BASE_URL}${item.image}`} 
+                alt="Waste evidence" 
+                className="waste-thumbnail"
+              />
+            </div>
+          )}
+          {/* --- IMAGE SECTION END --- */}
+
+          <div className="waste-info">
             <h4>{item.type}</h4>
             <p>📍 {item.location}</p>
             {item.description && (
